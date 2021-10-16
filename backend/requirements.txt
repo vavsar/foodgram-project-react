@@ -17,6 +17,7 @@ django-templated-mail==1.1.1
 djangorestframework==3.11.0
 djangorestframework-simplejwt==4.8.0
 djoser==2.1.0
+drf-extra-fields==3.1.1
 environ==1.0
 flake8==3.8.4
 gunicorn==20.0.4
@@ -46,8 +47,6 @@ PyJWT==2.0.1
 pylint==2.6.0
 pyparsing==2.4.7
 PySocks==1.7.1
-pytest==5.4.1
-pytest-django==3.9.0
 python3-openid==3.2.0
 pytils==0.3
 pytz==2020.1
