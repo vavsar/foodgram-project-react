@@ -79,7 +79,7 @@ class Recipe(models.Model):
     )
     cooking_time = models.PositiveIntegerField(
         verbose_name='Время приготовления',
-        validators=[MinValueValidator(1)],
+        validators=[MinValueValidator(1, message='Не менее 1')],
     )
     pub_date = models.DateTimeField(
         auto_now_add=True,
@@ -100,12 +100,12 @@ class IngredientInRecipe(models.Model):
         Ingredient,
         on_delete=models.CASCADE,
         verbose_name='Ингредиент',
-        related_name='ingredients_amounts',
+        related_name='ingredients_amount',
     )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='ingredients_amounts',
+        related_name='ingredients_amount',
     )
     amount = models.PositiveIntegerField(
         verbose_name='Количество ингредиента',
@@ -114,7 +114,6 @@ class IngredientInRecipe(models.Model):
     class Meta:
         verbose_name = 'Количество ингредиента'
         verbose_name_plural = 'Количество ингредиентов'
-        unique_together = ('ingredient', 'recipe')
         constraints = [
             models.UniqueConstraint(
                 fields=['ingredient', 'recipe'],
@@ -123,7 +122,7 @@ class IngredientInRecipe(models.Model):
         ]
 
 
-class Favorites(models.Model):
+class Favorite(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -190,7 +189,7 @@ class Purchase(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='customers',
+        related_name='purchases',
     )
     date_added = models.DateTimeField(
         auto_now_add=True,
