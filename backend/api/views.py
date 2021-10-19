@@ -155,10 +155,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
                     'amount': amount
                 }
             else:
-                list[name]['amount'] += amount
-        wishlist  = ([f'{item} - {value["amount"]} '
-                          f'{value["measurement_unit"]} \n'
-                          for item, value in shopping_list.items()])
-        response = HttpResponse(wishlist , 'Content-Type: text/plain')
+                shopping_list[name]['amount'] += amount
+        wishlist = ([f'{item} - {value["amount"]} '
+                     f'{value["measurement_unit"]} \n'
+                     for item, value in shopping_list.items()])
+        response = HttpResponse(wishlist, 'Content-Type: text/plain')
         response['Content-Disposition'] = 'attachment; filename="shoplist.txt"'
         return response
