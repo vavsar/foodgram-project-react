@@ -80,6 +80,9 @@ class RecipeSerializer(serializers.ModelSerializer):
                                        recipe=obj).exists()
 
     def get_ingredients_amount(self, ingredients, recipe):
+        tags = self.initial_data.get('tags')
+        for tag_id in tags:
+            recipe.tags.add(get_object_or_404(Tag, pk=tag_id))
         for ingredient in ingredients:
             ingredients_amount = IngredientInRecipe.objects.create(
                 recipe=recipe,
@@ -109,34 +112,32 @@ class RecipeSerializer(serializers.ModelSerializer):
                 ('Время приготовления должно быть '
                  'больше нуля')
             )
-        tag = self.initial_data.get('tags')
-        if tag is None:
+        tags = self.initial_data.get('tags')
+        tags_set = set()
+        if tags is None:
             raise serializers.ValidationError(
                 ('Необходимо добавить хотя бы'
                  'один тэг')
             )
+        for tag in tags:
+            tag_id = tag.get('id')
+            if tag_id in tags_set:
+                raise serializers.ValidationError(
+                    'Тэг в рецепте не должен повторяться.'
+                )
+            tags_set.add(tag_id)
         return data
 
     def create(self, validated_data):
-        tags = self.initial_data.get('tags')
         image = validated_data.pop('image')
         ingredients = validated_data.pop('ingredients')
         recipe = Recipe.objects.create(image=image, **validated_data)
-
-        for tag_id in tags:
-            recipe.tags.add(get_object_or_404(Tag, pk=tag_id))
-
         self.get_ingredients_amount(ingredients, recipe)
         return recipe
 
     def update(self, instance, validated_data):
         instance.tags.clear()
-        tags = self.initial_data.get('tags')
         ingredients = validated_data.pop('ingredients')
-
-        for tag_id in tags:
-            instance.tags.add(get_object_or_404(Tag, pk=tag_id))
-
         IngredientInRecipe.objects.filter(recipe=instance).delete()
         self.get_ingredients_amount(ingredients, instance)
 

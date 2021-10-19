@@ -141,7 +141,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, permission_classes=[IsAuthenticated])
     def download_shopping_cart(self, request):
-        list = {}
+        shopping_list = {}
         ingredients = IngredientInRecipe.objects.filter(
             recipe__purchases__user=request.user
         ).values('amount', 'ingredient__name', 'ingredient__measurement_unit')
@@ -149,16 +149,16 @@ class RecipeViewSet(viewsets.ModelViewSet):
             amount = ingredient['amount']
             name = ingredient['ingredient__name']
             measurement_unit = ingredient['ingredient__measurement_unit']
-            if name not in list:
-                list[name] = {
+            if name not in shopping_list:
+                shopping_list[name] = {
                     'measurement_unit': measurement_unit,
                     'amount': amount
                 }
             else:
                 list[name]['amount'] += amount
-        shopping_list = ([f'{item} - {value["amount"]} '
+        wishlist  = ([f'{item} - {value["amount"]} '
                           f'{value["measurement_unit"]} \n'
-                          for item, value in list.items()])
-        response = HttpResponse(shopping_list, 'Content-Type: text/plain')
+                          for item, value in shopping_list.items()])
+        response = HttpResponse(wishlist , 'Content-Type: text/plain')
         response['Content-Disposition'] = 'attachment; filename="shoplist.txt"'
         return response
