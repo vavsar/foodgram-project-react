@@ -9,18 +9,14 @@ services:
       - ./.env
 
   frontend:
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
+    image: vavsar/foodgram_frontend:latest
     volumes:
       - result_build:/app/result_build/build
     depends_on:
       - db
 
   backend:
-    build:
-      context: ../backend
-      dockerfile: Dockerfile
+    image: vavsar/foodgram_web:latest
     restart: always
     volumes:
       - static_value:/app/static/
