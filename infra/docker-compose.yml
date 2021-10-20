@@ -20,7 +20,9 @@ services:
       - ./.env
 
   frontend:
-    image: vavsar/foodgram_frontend:v1.00
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
     volumes:
       - result_build:/app/result_build/build
     depends_on:
