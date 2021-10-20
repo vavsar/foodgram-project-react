@@ -20,7 +20,7 @@ services:
       - ./.env
 
   frontend:
-    image: vavsar/foodgram_frontend:v1.00
+    image: vavsar/foodgram_frontend:latest
     volumes:
       - result_build:/app/result_build/build
     depends_on:
@@ -31,7 +31,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d
+      - ./nginx/:/etc/nginx/conf.d
       - static_value:/static/
       - media_value:/media/
       - result_build:/usr/share/nginx/html/
