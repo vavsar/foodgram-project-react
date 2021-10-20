@@ -140,7 +140,6 @@ class RecipeSerializer(serializers.ModelSerializer):
         ingredients = validated_data.pop('ingredients')
         IngredientInRecipe.objects.filter(recipe=instance).delete()
         self.get_ingredients_amount(ingredients, instance)
-
         if validated_data.get('image') is not None:
             instance.image = validated_data.get('image')
         instance.name = validated_data.get('name')

@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from .filters import IngredientNameFilter, RecipeFilter
 from .models import (Favorite, Follow, Ingredient, IngredientInRecipe,
                      Purchase, Recipe, Tag, User, )
+from .pagination import CustomPagination
 from .permissions import IsOwnerOrAdminOrReadOnly
 from .serializers import (FavoritesSerializer, ShowFollowerSerializer,
                           FollowSerializer, IngredientSerializer,
@@ -19,6 +20,7 @@ from .serializers import (FavoritesSerializer, ShowFollowerSerializer,
 
 class CustomUserViewSet(UserViewSet):
     queryset = User.objects.all()
+    pagination_class = CustomPagination
     serializer_class = UserSerializer
     permission_classes = (IsOwnerOrAdminOrReadOnly,)
 
@@ -77,6 +79,7 @@ class IngredientsViewSet(viewsets.ModelViewSet):
 
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
+    pagination_class = CustomPagination
     serializer_class = RecipeSerializer
     permission_classes = (IsOwnerOrAdminOrReadOnly,)
     filter_class = RecipeFilter
