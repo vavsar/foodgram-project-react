@@ -69,6 +69,7 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram_frontend:v1.00
             sudo docker-compose stop
             sudo docker-compose rm backend
+            sudo fuser -k 80/tcp
             touch .env
             echo DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }} >> .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
