@@ -1,7 +1,11 @@
 ## Проект Foodgram
+![example workflow](https://github.com/vavsar/foodgram-project-react/actions/workflows/yamdb_workflow.yml/badge.svg)
 
 Проект Foodgram позволяет пользователям публиковать рецепты, добавлять рецепты в избранное и список покупок, 
 подписыватся на других пользователей и скачивать список продуктов.
+
+## Проект доступен по адрессу:
+[Foodgram](http://127.0.0.1/)
 
 ## Технологии
 - Python
