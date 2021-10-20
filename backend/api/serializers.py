@@ -120,7 +120,7 @@ class RecipeSerializer(serializers.ModelSerializer):
                  'один тэг')
             )
         for tag in tags:
-            tag_id = tag.get('id')
+            tag_id = tag['id']
             if tag_id in tags_set:
                 raise serializers.ValidationError(
                     'Тэг в рецепте не должен повторяться.'
