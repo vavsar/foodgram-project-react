@@ -113,19 +113,11 @@ class RecipeSerializer(serializers.ModelSerializer):
                  'больше нуля')
             )
         tags = self.initial_data.get('tags')
-        # tags_set = set()
         if tags is None:
             raise serializers.ValidationError(
                 ('Необходимо добавить хотя бы'
                  'один тэг')
             )
-        # for tag in tags:
-        #     tag_id = tag['id']
-        #     if tag_id in tags_set:
-        #         raise serializers.ValidationError(
-        #             'Тэг в рецепте не должен повторяться.'
-        #         )
-        #     tags_set.add(tag_id)
         return data
 
     def create(self, validated_data):
